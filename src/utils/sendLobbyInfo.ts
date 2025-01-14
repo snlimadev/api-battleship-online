@@ -10,34 +10,31 @@ import { LOBBY_ROOM_CODE } from '../config/config.js';
  * @returns {void} This function does not return any value.
  */
 export function sendLobbyInfo(rooms: Rooms): void {
-  const getAvailableRooms = (): number[] => {
-    const availableRooms: number[] = Array.from(rooms)
-      .filter(([roomCode, room]) => room.isPublic && room.clients.size < 2)
-      .map(([roomCode]) => roomCode);
-
-    return availableRooms;
-  };
-
-  const getPlayersOnlineCount = (): number => {
+  const getLobbyInfo = (): LobbyInfo => {
+    const availableRooms: number[] = [];
     const playersOnline: Set<ExtendedWebSocket> = new Set();
 
-    rooms.forEach((room: RoomParams) => {
+    rooms.forEach((room: RoomParams, roomCode: number) => {
+      if (room.isPublic && room.clients.size < 2) {
+        availableRooms.push(roomCode);
+      }
+
       room.clients.forEach((client: ExtendedWebSocket) => {
         playersOnline.add(client);
       });
     });
 
-    return playersOnline.size;
+    const lobbyInfo: LobbyInfo = {
+      rooms: availableRooms,
+      playersOnlineCount: playersOnline.size,
+      activeRoomsCount: rooms.size - 1
+    };
+
+    return lobbyInfo;
   };
 
   if (rooms.has(LOBBY_ROOM_CODE)) {
-    const message: OutgoingMessageParams = {
-      lobbyInfo: {
-        rooms: getAvailableRooms(),
-        playersOnlineCount: getPlayersOnlineCount(),
-        activeRoomsCount: rooms.size - 1
-      }
-    };
+    const message: OutgoingMessageParams = { lobbyInfo: getLobbyInfo() };
 
     rooms.get(LOBBY_ROOM_CODE)?.clients.forEach((client: ExtendedWebSocket) => {
       if (client.readyState === WebSocket.OPEN) {
