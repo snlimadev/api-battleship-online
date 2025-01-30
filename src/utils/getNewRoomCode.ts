@@ -3,7 +3,7 @@ import { MAX_ROOM_COUNTER } from '../config/config.js';
 let roomCounter: number = 0;
 
 /**
- * Generates a new room code based on a counter and a random integer.
+ * Generates a new room code based on a random integer and a counter.
  * 
  * @param {Rooms} rooms - A map containing all active rooms on the server.
  * 
@@ -15,7 +15,7 @@ export function getNewRoomCode(rooms: Rooms): number {
   }
 
   const randomInt: number = Math.floor(1000 + Math.random() * 9000);
-  const roomCode: number = Number(String(++roomCounter) + String(randomInt));
+  const roomCode: number = Number(String(randomInt) + String(++roomCounter));
 
   return (!rooms.has(roomCode)) ? roomCode : -1;
 }
