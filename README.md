@@ -8,7 +8,7 @@ In addition to the game functionality, it features a lobby system where users ca
 
 Check out the <a href="https://github.com/snlimadev/api-battleship-online/blob/main/src/types/websocket.d.ts">IncomingMessageParams and OutgoingMessageParams interfaces</a> to learn about the input and output parameters.
 
-WebSocket Connection URL: wss://api-battleship-online.glitch.me
+WebSocket Connection URL: wss://api-battleship-online.onrender.com
 
 <h2>Português</h2>
 
@@ -20,4 +20,4 @@ Além das funcionalidades de jogo, ele conta com um sistema de lobby no qual os 
 
 Confira as <a href="https://github.com/snlimadev/api-battleship-online/blob/main/src/types/websocket.d.ts">interfaces IncomingMessageParams e OutgoingMessageParams</a> para aprender sobre os parâmetros de entrada e saída.
 
-URL de Conexão WebSocket: wss://api-battleship-online.glitch.me
+URL de Conexão WebSocket: wss://api-battleship-online.onrender.com

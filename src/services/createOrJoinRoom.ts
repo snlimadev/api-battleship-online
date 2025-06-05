@@ -39,7 +39,7 @@ export function createOrJoinRoom(
 
   if (action === 'CREATE_ROOM') {
     const gameSettings: GameSettings = getGameSettings(false, { isClassic: isClassic });
-    newRoomCode = getNewRoomCode(rooms);
+    newRoomCode = getNewRoomCode(rooms, roomCode);
 
     if (newRoomCode > 0) {
       rooms.set(newRoomCode, {

@@ -1,6 +1,6 @@
 {
   "name": "api-battleship-online",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "A Node.js WebSocket server for a battleship-inspired online game",
   "main": "dist/server.js",
   "scripts": {
