@@ -33,6 +33,10 @@ export function validateRoundStart(
     ? room?.gameState?.player1State
     : room?.gameState?.player2State;
 
+  const newShips: number[][][] = shipSizes.map(size =>
+    Array.from({ length: size }, () => [])
+  );
+
   const sendInvalidCoordError = (): void => {
     sendMessage(socket, rooms, { error: 'Invalid ship coordinate.' });
   };
@@ -74,26 +78,21 @@ export function validateRoundStart(
         ? [startRow + j, startCol]
         : [startRow, startCol + j];
 
-      if (playerState) {
-        const hasCoordBeenUsed: boolean = playerState.ships.some(currShip =>
-          currShip.some(([r, c]) => r === coord[0] && c === coord[1])
-        );
+      const hasCoordBeenUsed: boolean = newShips.some(currShip =>
+        currShip.some(([r, c]) => r === coord[0] && c === coord[1])
+      );
 
-        if (hasCoordBeenUsed) {
-          playerState.ships = shipSizes.map(size =>
-            Array.from({ length: size }, () => [])
-          );
-
-          sendInvalidCoordError();
-          return;
-        }
-
-        playerState.ships[i][j] = coord;
+      if (hasCoordBeenUsed) {
+        sendInvalidCoordError();
+        return;
       }
+
+      newShips[i][j] = coord;
     }
   }
 
   if (room?.gameState && room.roundState && playerState) {
+    playerState.ships = newShips;
     playerState.isReady = true;
 
     if (room.gameState.player1State.isReady && room.gameState.player2State.isReady) {
