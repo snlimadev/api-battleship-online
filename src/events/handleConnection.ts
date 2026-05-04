@@ -3,7 +3,7 @@ import { handleClose } from './handleClose.js';
 
 /**
  * Handles the WebSocket `connection` event by setting up event listeners for
- * the `message`, `close` and `error` events.
+ * the `pong`, `message`, `close`, and `error` events.
  * 
  * @param {ExtendedWebSocket} socket - The WebSocket connection object.
  * @param {Rooms} rooms - A map containing all active rooms on the server.
@@ -14,6 +14,12 @@ export function handleConnection(
   socket: ExtendedWebSocket,
   rooms: Rooms
 ): void {
+  socket.isAlive = true;
+
+  socket.on('pong', () => {
+    socket.isAlive = true;
+  });
+
   socket.on('message', (message: string) => {
     try {
       handleMessage(socket, rooms, message);

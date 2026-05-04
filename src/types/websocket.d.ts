@@ -3,7 +3,8 @@ import WebSocket from 'ws';
 declare global {
   interface ExtendedWebSocket extends WebSocket {
     roomCode?: number,
-    user?: SocketUser
+    user?: SocketUser,
+    isAlive?: boolean
   }
 
   interface IncomingMessageParams {

@@ -1,5 +1,7 @@
 export const PORT: number = 8080;
 
+export const HEARTBEAT_INTERVAL: number = 30000;
+
 export const LOBBY_ROOM_CODE: number = 0;
 
 export const MAX_ROOM_COUNTER: number = 9999;
